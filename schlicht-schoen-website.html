@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schlicht Schön - Rainer Böhm</title>
+    <style>
+        :root {
+            --primary-color: #3c5548;
+            --accent-color: #c0b7a7;
+            --light-color: #f9f7f4;
+            --font-family: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Montserrat', Arial, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--primary-color);
+            background-color: var(--light-color);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: var(--font-family);
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: 0.05em;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-family: var(--font-sans);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            background-image: url("/api/placeholder/1200/800");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-top: 60px;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            color: white;
+            max-width: 650px;
+            padding: 3.5rem;
+            background-color: rgba(60, 85, 72, 0.8);
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .hero-subtitle {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 300;
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .about {
+            background-color: white;
+            position: relative;
+        }
+        
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .services {
+            background-color: var(--light-color);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 2.5rem;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .service-card:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(60, 85, 72, 0.1);
+        }
+        
+        .service-card:hover:before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .service-card h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+        
+        .exhibitions {
+            background-color: white;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.4s ease;
+            filter: grayscale(20%);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.03);
+            filter: grayscale(0%);
+        }
+        
+        .contact {
+            background-color: var(--light-color);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+        
+        .contact-details, .contact-map {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-details p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-map {
+            background-color: #e1ddd5;
+            height: 350px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 5px solid var(--accent-color);
+        }
+        
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .social-links {
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 0.8rem;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+    <!-- Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="/api/placeholder/200/200" alt="Schlicht Schön Logo" style="width: 50px; height: 50px; border-radius: 50%;">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#ueber-uns">Über uns</a></li>
+                    <li><a href="#leistungen">Leistungen</a></li>
+                    <li><a href="#ausstellungen">Ausstellungen</a></li>
+                    <li><a href="#kontakt">Kontakt</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-subtitle">Willkommen bei</div>
+                <h1>Schlicht Schön</h1>
+                <p style="letter-spacing: 0.1em; margin-bottom: 1.5rem; font-family: var(--font-sans); font-weight: 300;">Interieur · Floristik · Gartengestaltung · Kunst</p>
+                <p>Erleben Sie die einzigartige Verbindung von handwerklicher Tradition und zeitloser Ästhetik in unserer historischen Schmiede in Feldbach.</p>
+                <div style="margin-top: 2rem; font-size: 0.9rem; font-style: italic;">Pop Up by Rainer Böhm</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="ueber-uns">
+        <div class="container">
+            <h2>Über uns</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>In den historischen Mauern einer über 100 Jahre alten Schmiede im Herzen von Feldbach hat Rainer Böhm einen Ort geschaffen, der Tradition mit zeitloser Ästhetik verbindet. Bei <strong>Schlicht Schön</strong> finden Sie sorgfältig ausgewählte Interieur-Elemente und florale Kunstwerke, die Ihrem Zuhause eine besondere Note verleihen.</p>
+                    
+                    <p>Die authentische Atmosphäre der alten Schmiede bildet den perfekten Rahmen für unser Konzept: Schönheit in ihrer natürlichsten und schlichtesten Form zu präsentieren. Die ursprünglichen Elemente des historischen Gebäudes wurden bewahrt und verleihen unserem Geschäft einen unvergleichlichen Charakter.</p>
+                    
+                    <p>Rainer Böhm verbindet seine Leidenschaft für Floristik, Interieur-Design und Kunst mit handwerklichem Können und einem Auge für das Besondere. Jedes Stück in unserem Geschäft wird mit Liebe zum Detail ausgewählt oder gestaltet.</p>
+                </div>
+                <div class="about-image">
+                    <img src="/api/placeholder/500/400" alt="Die historische Schmiede - Schlicht Schön">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="leistungen">
+        <div class="container">
+            <h2>Unsere Leistungen</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Interieur & Dekoration</h3>
+                    <p>Entdecken Sie einzigartige Vasen, Skulpturen und Dekorationselemente, die Ihrem Zuhause Charakter und Persönlichkeit verleihen. Jedes Stück wird mit Bedacht ausgewählt, um Ästhetik und Funktionalität zu vereinen.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Floristik</h3>
+                    <p>Von natürlichen Arrangements bis hin zu kunstvollen Kompositionen – unsere floralen Kreationen bringen die Schönheit der Natur in Ihre Räume. Für besondere Anlässe oder einfach, um den Alltag zu verschönern.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Gartengestaltung</h3>
+                    <p>Auf Anfrage gestalten wir Ihren Garten zu einem Ort der Ruhe und Inspiration. Mit einem Gespür für Raum und Natur schaffen wir harmonische Außenbereiche, die zum Verweilen einladen.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Wohnraumgestaltung</h3>
+                    <p>Lassen Sie Ihre Wohnung oder Ihr Haus von uns in neuem Glanz erstrahlen. Wir beraten Sie bei der Gestaltung Ihrer Räume und setzen Ihre Wünsche mit Kreativität und Fachkenntniss um.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Kunstvermittlung</h3>
+                    <p>Wir helfen Ihnen, die perfekten Kunstwerke für Ihre Räume zu finden. Mit einem Netzwerk von talentierten Künstlern vermitteln wir Kunst, die zu Ihnen und Ihrem Umfeld passt.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Schaufenstergestaltung</h3>
+                    <p>Ihr Geschäft verdient einen einladenden ersten Eindruck. Wir gestalten Schaufenster, die Blicke auf sich ziehen und die Essenz Ihres Angebots perfekt präsentieren.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exhibitions Section -->
+    <section class="exhibitions" id="ausstellungen">
+        <div class="container">
+            <h2>Kunstausstellungen</h2>
+            <p>In regelmäßigen Abständen verwandelt sich unser Geschäft in eine kleine Galerie. Wir präsentieren Werke lokaler und internationaler Künstler und schaffen einen Raum für kulturellen Austausch und Inspiration.</p>
+            
+            <p>Besuchen Sie uns, um die aktuellen Ausstellungen zu erleben oder informieren Sie sich hier über kommende Veranstaltungen.</p>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="/api/placeholder/400/300" alt="Kunstausstellung 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="/api/placeholder/400/300" alt="Kunstausstellung 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="/api/placeholder/400/300" alt="Kunstausstellung 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="/api/placeholder/400/300" alt="Kunstausstellung 4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="kontakt">
+        <div class="container">
+            <h2>Kontakt</h2>
+            <div class="contact-info">
+                <div class="contact-details">
+                    <h3>Besuchen Sie uns</h3>
+                    <p><strong>Adresse:</strong> Bürgergasse 14, 8330 Feldbach, Steiermark</p>
+                    <p><strong>Telefon:</strong> +43 XXXX XXXXXX</p>
+                    <p><strong>E-Mail:</strong> info@schlicht-schoen.at</p>
+                    
+                    <h3 style="margin-top: 2rem;">Öffnungszeiten</h3>
+                    <p>Montag - Freitag: 9:00 - 18:00 Uhr</p>
+                    <p>Samstag: 9:00 - 14:00 Uhr</p>
+                    <p>Sonntag: Geschlossen</p>
+                    
+                    <p style="margin-top: 1.5rem;">Für Beratungsgespräche zur Garten- und Wohnraumgestaltung bitten wir um Terminvereinbarung.</p>
+                </div>
+                
+                <div class="contact-map">
+                    <p><i class="fas fa-map-marker-alt" style="font-size: 2rem; margin-bottom: 1rem;"></i><br>
+                    Hier könnte eine interaktive Karte eingebunden werden.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 Schlicht Schön - Rainer Böhm</p>
+            <p>Bürgergasse 14, 8330 Feldbach, Steiermark</p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
